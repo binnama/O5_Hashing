@@ -4,7 +4,7 @@ public class LCFS {
     // Last Come First Serve
 
     // Hashlengde
-    private int hashLengde;
+    private int hashLength;
 
     // Hashtabell
     private String hashTabell[];
@@ -20,7 +20,7 @@ public class LCFS {
     //
     public LCFS(int lengde)
     {
-        hashLengde = lengde;
+        hashLength = lengde;
         hashTabell = new String[lengde];
         n = 0;
         antProbes = 0;
@@ -29,7 +29,7 @@ public class LCFS {
     // Returnerer load factor
     public float loadFactor()
     {
-        return ((float) n)/hashLengde;
+        return ((float) n)/ hashLength;
     }
 
     // Returnerer antall data i tabellen
@@ -48,7 +48,7 @@ public class LCFS {
     int hash(String S)
     {
         int h = Math.abs(S.hashCode());
-        return h % hashLengde;
+        return h % hashLength;
     }
 
     // Innsetting av tekststreng med lineær probing
@@ -69,22 +69,38 @@ public class LCFS {
         // Lineær probing
         int neste = h;
 
+        // Så lenge plassen er opptatt:
         while (hashTabell[neste] != null)
         {
+
             // Ny probe
             antProbes++;
 
             // Denne indeksen er opptatt, prøver neste
-            neste++;
+
+            //neste++;
+
+            // Så her lagrer jeg den nye verdien så jeg kan deale med [neste] som en annen verdi
+            // Håper jeg
+            String Override = S;
+
+            // Tester
+            System.out.println("Override: " + Override);
+            System.out.println("HashTabell[neste]: " + hashTabell[neste]);
+
+            // Denne blir satt inn når den forrige verdien er hentet ut og lagret!
+            hashTabell[neste] = Override;   // Nå blir vel den gamle verdien overkjørt uten at jeg har dem med videre  :/
+            System.out.println("HashTabell[neste] 2.0: " + hashTabell[neste]);
 
             //LC,FS -> Bare et par linjer til med kode, legg inn en swap
-            //	Kun 1 linje er nødvendiig! o.O
+            //	Kun 1 linje er nødvendig! o.O
             //RH -> Lite kode, men beregne verdien for begge som må
             //	sammenlignes. Finn hvem som som må flyttes videre
             //	3/4 linjer nødvendig
             // Wrap-around
-            if (neste >= hashLengde)
-                neste = 0;
+            if (neste >= hashLength)
+                neste = 0;  // Når koden har nådd slutten går den tilbake til starten
+
 
             // Hvis vi er kommet tilbake til opprinnelig hashverdi, er
             // tabellen full og vi gir opp (her ville man normalt
@@ -124,7 +140,7 @@ public class LCFS {
             neste++;
 
             // Wrap-around
-            if (neste >= hashLengde)
+            if (neste >= hashLength)
                 neste = 0;
 
             // Hvis vi er kommet tilbake til opprinnelig hashverdi,

@@ -1,5 +1,6 @@
 import modules.LCFS;
 
+import java.io.*;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -7,21 +8,33 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
+        //System.out.println("Please provide a hash length: ");
+        //int hashLength = input.nextInt();
+        //System.out.println(hashLength);
 
-        // Hashlengde leses fra kommandolinjen
-        int hashLengde = 0;
-        System.out.println("Please provide a hash length: ");
-        int hashLength = scanner.nextInt();
+        int hashLength = 50000;
+        LCFS lcfs = new LCFS(hashLength);
 
         try
         {
+            /*
             if (args.length != 1)
                 throw new IOException("Feil: Hashlengde må angis");
-            hashLengde = Integer.parseInt(args[0]);
-            if (hashLengde < 1 )
+            hashLength = Integer.parseInt(args[0]);
+            if (hashLength < 1 )
                 throw new IOException("Feil:" +
                         "Hashlengde må være større enn 0");
+            */
+
+            System.out.println("Datafile: ");
+            String datafile = input.next();
+            Scanner inputFile = new Scanner(new File(datafile));
+
+            while (inputFile.hasNext())
+            {
+                lcfs.insert(inputFile.nextLine());
+            }
         }
         catch (Exception e)
         {
@@ -30,21 +43,9 @@ public class Main {
         }
 
         // Oppgave 1: Last Come First Serve
-
-        // Lager ny hashTabell
-        LCFS lcfs = new LCFS(hashLengde);
-        //lastComeFirstServed lcfs = new lastComeFirstServed(hashLengde);
-
-
-        // Leser input og hasher alle linjer
-        while (hashLength.hasNext())
-        {
-            lcfs.insert(hashLength.nextLine());
-        }
-
         // Skriver ut hashlengde, antall data lest, antall kollisjoner
         // og load factor
-        System.out.println("Hashlengde  : " + hashLengde);
+        System.out.println("Hashlengde  : " + hashLength);
         System.out.println("Elementer   : " + lcfs.antData());
         System.out.printf( "Load factor : %5.3f\n",  lcfs.loadFactor());
         System.out.println("Probes      : " + lcfs.antProbes());
