@@ -22,11 +22,14 @@ public class Main {
             String datafile = input.next();
             Scanner inputFile = new Scanner(new File(datafile));
 
+            // Middlertidig
             int count = 0;
 
+            // Middlertidig
             while (inputFile.hasNext() && count < 300)
             {
                 lcfs.insert(inputFile.nextLine());
+                // Middlertidig
                 count++;
             }
         }
