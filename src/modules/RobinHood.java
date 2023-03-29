@@ -71,33 +71,58 @@ public class RobinHood
 
 	String Override = S;
 	String holder;
+	// Oppretter inn element T
+	String T;
+
 
 	while (hashTabell[neste] != null)
 	{
-		// Ny probe
-		antProbes++;
-
-		// Lagrer den gamle verdien på gjeldende index
-		holder = hashTabell[neste];     // Holder på den gamle verdien
-
-		hashTabell[neste] = Override;   // Setter den nye verdien på gjeldende index
-
-		neste++;
-
-		if (hashTabell[neste] == null) {
-			hashTabell[neste] = holder;
-			break;
-		}
-
-		while (hashTabell[neste] != null)
-		{
+		int Tcount = 0;
+		int Scount = 0;
+		if (Tcount < Scount) {
+		/*
+		Bruker LCFS-koden videre fra forrige oppgave
+		 */
 			antProbes++;
-			Override = holder;
-			holder = hashTabell[neste];
-			hashTabell[neste] = Override;
+
+			holder = hashTabell[neste];     // Holder på den gamle verdien
+
+			hashTabell[neste] = Override;   // Setter den nye verdien på gjeldende index
+
 			neste++;
+
+			if (hashTabell[neste] == null) {
+				hashTabell[neste] = holder;
+				break;
+			}
+
+			while (hashTabell[neste] != null)
+			{
+				antProbes++;
+				Override = holder;
+				holder = hashTabell[neste];
+				hashTabell[neste] = Override;
+				neste++;
+				if (neste >= hashLength)
+					neste = 0;  // Når koden har nådd slutten går den tilbake til starten
+
+				if (neste == h)
+				{
+					System.err.println("\nHashtabell full, avbryter");
+					System.exit(0);
+				}
+			}
+		}
+		else { // Vanlig lineær probing / innsetting
+
+			antProbes++;
+
+			// Denne indeksen er opptatt, prøver neste
+			neste++;
+
+			// Wrap-around
 			if (neste >= hashLength)
-				neste = 0;  // Når koden har nådd slutten går den tilbake til starten
+				neste = 0;
 
 			// Hvis vi er kommet tilbake til opprinnelig hashverdi, er
 			// tabellen full og vi gir opp (her ville man normalt
@@ -108,19 +133,13 @@ public class RobinHood
 				System.exit(0);
 			}
 		}
-
 	}
 
-	// Lagrer tekststrengen på funnet indeks
 	hashTabell[neste] = S;
 
-	// Øker antall elementer som er lagret
 	n++;
     }
 
-    // Søking etter tekststreng med lineær probing
-    // Returnerer true hvis strengen er lagret, false ellers
-    //
     boolean search(String S)
     {
 	// Beregner hashverdien

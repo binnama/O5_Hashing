@@ -117,7 +117,7 @@ public class LCFSwSOUTs {    // Last Come First Serve
             System.out.println("Dette blir ny Holder. Ny verdi: " + hashTabell[neste] + "\n");
             while (hashTabell[neste] != null)
             {
-
+                antProbes++;
                 Override = holder;
                 System.out.println("New Override: " + Override);
                 holder = hashTabell[neste];

@@ -127,34 +127,4 @@ public class LCFS {
     // Søking etter tekststreng med lineær probing
     // Returnerer true hvis strengen er lagret, false ellers
     //
-    boolean search(String S)
-    {
-        // Beregner hashverdien
-        int h = hash(S);
-
-        // Lineær probing
-        int neste = h;
-
-        while (hashTabell[neste] != null)
-        {
-            // Har vi funnet tekststrengen?
-            if (hashTabell[neste].compareTo(S) == 0)
-                return true;
-
-            // Prøver neste mulige
-            neste++;
-
-            // Wrap-around
-            if (neste >= hashLength)
-                neste = 0;
-
-            // Hvis vi er kommet tilbake til opprinnelig hashverdi,
-            // finnes ikke strengen i tabellen
-            if (neste == h)
-                return false;
-        }
-
-        // Finner ikke strengen, har kommet til en probe som er null
-        return false;
-    }
 }
