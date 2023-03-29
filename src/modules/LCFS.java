@@ -89,7 +89,7 @@ public class LCFS {
             System.out.println("HashTabell[neste]: " + hashTabell[neste]);
 
             // Denne blir satt inn når den forrige verdien er hentet ut og lagret!
-            hashTabell[neste] = Override;   // Nå blir vel den gamle verdien overkjørt uten at jeg har den med videre  :/
+            hashTabell[neste] = Override;   // Nå blir vel den gamle verdien overkjørt uten at jeg har dem med videre  :/
             System.out.println("HashTabell[neste] 2.0: " + hashTabell[neste]);
 
             //LC,FS -> Bare et par linjer til med kode, legg inn en swap
