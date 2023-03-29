@@ -69,7 +69,9 @@ public class LCFS {
         // Lineær probing
         int neste = h;
 
+        // Lagrer den nye verdien som en egen. Forid jeg kan :D
         String Override = S;
+        String holder;
 
         // Så lenge plassen er opptatt:
         while (hashTabell[neste] != null)
@@ -80,31 +82,41 @@ public class LCFS {
 
             // Denne indeksen er opptatt, prøver neste
 
+            //Mutet denne ->
             //neste++;
 
-            // Så her lagrer jeg den nye verdien så jeg kan deale med [neste] som en annen verdi
-            // Håper jeg
-            //Override = S;
-            String temp;
-            temp = hashTabell[neste];
+            // Lagrer den gamle verdien på gjeldende index
+            holder = hashTabell[neste];     // Holder på den gamle verdien
+            System.out.println("Holder : " + holder);
 
-            // Tester
-            System.out.println("Override: " + Override);
-            System.out.println("HashTabell[neste]: " + hashTabell[neste]);
-            System.out.println("Temp : " + temp);
-
-            // Denne blir satt inn når den forrige verdien er hentet ut og lagret!
-            hashTabell[neste] = Override;   // Nå blir vel den gamle verdien overkjørt uten at jeg har dem med videre  :/
-            System.out.println("HashTabell[neste] 2.0: " + hashTabell[neste]);
+            hashTabell[neste] = Override;   // Setter den nye verdien på gjeldende index
+            System.out.println("Override original: " + hashTabell[neste]);
 
             neste++;
+            while (hashTabell[neste] != null)
+            {
+                Override = holder;
+                System.out.println("New Override: " + Override);
+                holder = hashTabell[neste];
+                System.out.println("New Holder: " + holder);
+                hashTabell[neste] = Override;
+                System.out.println("Setter fra meg New Override: " + hashTabell[neste]);
+                neste++;
+                System.out.println("HashTabell[neste] bytte verdi: " + hashTabell[neste] + "\n");
+                if (neste >= hashLength)
+                    neste = 0;  // Når koden har nådd slutten går den tilbake til starten
 
-            //LC,FS -> Bare et par linjer til med kode, legg inn en swap
-            //	Kun 1 linje er nødvendig! o.O
-            //RH -> Lite kode, men beregne verdien for begge som må
-            //	sammenlignes. Finn hvem som som må flyttes videre
-            //	3/4 linjer nødvendig
-            // Wrap-around
+
+                // Hvis vi er kommet tilbake til opprinnelig hashverdi, er
+                // tabellen full og vi gir opp (her ville man normalt
+                // doblet lengden på hashtabellen og gjort en rehashing)
+                if (neste == h)
+                {
+                    System.err.println("\nHashtabell full, avbryter");
+                    System.exit(0);
+                }
+            }
+            System.out.println("HashTabell[neste] bytte verdi: " + hashTabell[neste] + "\n");
             if (neste >= hashLength)
                 neste = 0;  // Når koden har nådd slutten går den tilbake til starten
 
@@ -117,10 +129,20 @@ public class LCFS {
                 System.err.println("\nHashtabell full, avbryter");
                 System.exit(0);
             }
+            // Tester
+
+
+            //LC,FS -> Bare et par linjer til med kode, legg inn en swap
+            //	Kun 1 linje er nødvendig! o.O
+            //RH -> Lite kode, men beregne verdien for begge som må
+            //	sammenlignes. Finn hvem som som må flyttes videre
+            //	3/4 linjer nødvendig
+            // Wrap-around
         }
 
         // Lagrer tekststrengen på funnet indeks
-        hashTabell[neste] = Override;
+        // Byttet fra S til Override
+        hashTabell[neste] = S;
 
         // Øker antall elementer som er lagret
         n++;

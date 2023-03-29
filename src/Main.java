@@ -1,7 +1,6 @@
 import modules.LCFS;
 
 import java.io.*;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -26,7 +25,7 @@ public class Main {
             int count = 0;
 
             // Middlertidig
-            while (inputFile.hasNext() && count < 300)
+            while (inputFile.hasNext() && count < 1000)
             {
                 lcfs.insert(inputFile.nextLine());
                 // Middlertidig
