@@ -69,6 +69,10 @@ public class LCFS {
         // Lineær probing
         int neste = h;
 
+        // La til en ny String som skal holde på den nye verdien
+        // av grunner bare jeg skulle ønske jeg visste XD
+        String Override = S;
+
         // Så lenge plassen er opptatt:
         while (hashTabell[neste] != null)
         {
@@ -77,20 +81,22 @@ public class LCFS {
             antProbes++;
 
             // Denne indeksen er opptatt, prøver neste
-
             //neste++;
 
-            // Så her lagrer jeg den nye verdien så jeg kan deale med [neste] som en annen verdi
-            // Håper jeg
-            String Override = S;
+            String temp;
+            temp = hashTabell[neste]; // Lagrer den gamle verdien
 
             // Tester
-            System.out.println("Override: " + Override);
-            System.out.println("HashTabell[neste]: " + hashTabell[neste]);
+            System.out.println("Override: " + Override); // Den nye verdien
+            System.out.println("HashTabell[neste]: " + hashTabell[neste]); // Den gamle verdien
+            System.out.println("Temp: " + temp);
+
 
             // Denne blir satt inn når den forrige verdien er hentet ut og lagret!
-            hashTabell[neste] = Override;   // Nå blir vel den gamle verdien overkjørt uten at jeg har dem med videre  :/
+            hashTabell[neste] = Override; // Setter den
             System.out.println("HashTabell[neste] 2.0: " + hashTabell[neste]);
+
+            neste++;
 
             //LC,FS -> Bare et par linjer til med kode, legg inn en swap
             //	Kun 1 linje er nødvendig! o.O
@@ -113,7 +119,8 @@ public class LCFS {
         }
 
         // Lagrer tekststrengen på funnet indeks
-        hashTabell[neste] = S;
+        // Endret fra S til Override
+        hashTabell[neste] = Override;
 
         // Øker antall elementer som er lagret
         n++;

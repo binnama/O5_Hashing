@@ -13,27 +13,21 @@ public class Main {
         //int hashLength = input.nextInt();
         //System.out.println(hashLength);
 
-        int hashLength = 50000;
+        int hashLength = 3000;
         LCFS lcfs = new LCFS(hashLength);
 
         try
         {
-            /*
-            if (args.length != 1)
-                throw new IOException("Feil: Hashlengde må angis");
-            hashLength = Integer.parseInt(args[0]);
-            if (hashLength < 1 )
-                throw new IOException("Feil:" +
-                        "Hashlengde må være større enn 0");
-            */
-
             System.out.println("Datafile: ");
             String datafile = input.next();
             Scanner inputFile = new Scanner(new File(datafile));
 
-            while (inputFile.hasNext())
+            int count = 0;
+
+            while (inputFile.hasNext() && count < 300)
             {
                 lcfs.insert(inputFile.nextLine());
+                count++;
             }
         }
         catch (Exception e)
