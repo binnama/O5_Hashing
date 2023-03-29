@@ -22,14 +22,14 @@ public class Main {
             Scanner inputFile = new Scanner(new File(datafile));
 
             // Middlertidig
-            int count = 0;
+            //int count = 0;
 
             // Middlertidig
-            while (inputFile.hasNext() && count < 1000)
+            while (inputFile.hasNext())
             {
                 lcfs.insert(inputFile.nextLine());
                 // Middlertidig
-                count++;
+                //count++;
             }
         }
         catch (Exception e)

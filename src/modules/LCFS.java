@@ -93,11 +93,14 @@ public class LCFS {
             System.out.println("Override original: " + hashTabell[neste]);
 
             neste++;
+
+            System.out.println("Dette blir ny Holder. Ny verdi: " + hashTabell[neste] + "\n");
             while (hashTabell[neste] != null)
             {
                 Override = holder;
                 System.out.println("New Override: " + Override);
                 holder = hashTabell[neste];
+                System.out.println("Skal matche verdien to opp!");
                 System.out.println("New Holder: " + holder);
                 hashTabell[neste] = Override;
                 System.out.println("Setter fra meg New Override: " + hashTabell[neste]);
@@ -105,7 +108,6 @@ public class LCFS {
                 System.out.println("HashTabell[neste] bytte verdi: " + hashTabell[neste] + "\n");
                 if (neste >= hashLength)
                     neste = 0;  // Når koden har nådd slutten går den tilbake til starten
-
 
                 // Hvis vi er kommet tilbake til opprinnelig hashverdi, er
                 // tabellen full og vi gir opp (her ville man normalt
@@ -120,7 +122,6 @@ public class LCFS {
             if (neste >= hashLength)
                 neste = 0;  // Når koden har nådd slutten går den tilbake til starten
 
-
             // Hvis vi er kommet tilbake til opprinnelig hashverdi, er
             // tabellen full og vi gir opp (her ville man normalt
             // doblet lengden på hashtabellen og gjort en rehashing)
@@ -129,8 +130,6 @@ public class LCFS {
                 System.err.println("\nHashtabell full, avbryter");
                 System.exit(0);
             }
-            // Tester
-
 
             //LC,FS -> Bare et par linjer til med kode, legg inn en swap
             //	Kun 1 linje er nødvendig! o.O
