@@ -1,7 +1,8 @@
 package modules;
 
-public class LCFS {
-    // Last Come First Serve
+public class LCFSwSOUTs {    // Last Come First Serve
+
+    // Denne er bare for min egen skyld. Ikke tenk på den ;)
 
     // Hashlengde
     private int hashLength;
@@ -18,7 +19,7 @@ public class LCFS {
     // Konstruktør
     // Sjekker ikke for fornuftig verdi av hashlengden
     //
-    public LCFS(int lengde)
+    public LCFSwSOUTs(int lengde)
     {
         hashLength = lengde;
         hashTabell = new String[lengde];
@@ -51,6 +52,16 @@ public class LCFS {
         return h % hashLength;
     }
 
+    // Innsetting av tekststreng med lineær probing
+    // Avbryter med feilmelding hvis ledig plass ikke finnes
+    //
+    //Denne delen må skrives om i Oblig 5 for å ta for seg:
+    //-Last come, first served
+    //--Nyttig når bruker vet at det siste som ble lagt til snart skal brukes
+    //--Dytter da alt som ligger i kjeden bakover
+    //-Robin Hood
+    //--Gjør søkeveiene så korte som mulig. Hvem ligger lengst unna sin
+    //	hash-verdi
     public void insert(String S)
     {
         // Beregner hashverdien
@@ -59,7 +70,7 @@ public class LCFS {
         // Lineær probing
         int neste = h;
 
-        // Lagrer nye verdier som egen. Fordi jeg kan :D
+        // Lagrer den nye verdien som en egen. Forid jeg kan :D
         String Override = S;
         String holder;
 
@@ -83,25 +94,39 @@ public class LCFS {
             // Ny probe
             antProbes++;
 
+            // Denne indeksen er opptatt, prøver neste
+
+            //Mutet denne ->
+            //neste++;
+
             // Lagrer den gamle verdien på gjeldende index
             holder = hashTabell[neste];     // Holder på den gamle verdien
+            System.out.println("Holder : " + holder);
 
             hashTabell[neste] = Override;   // Setter den nye verdien på gjeldende index
+            System.out.println("Override original: " + hashTabell[neste]);
 
             neste++;
 
             if (hashTabell[neste] == null) {
                 hashTabell[neste] = holder;
+                System.out.println("Plasserer holder på neste ledige plass: " + hashTabell[neste] + "\n");
                 break;
             }
 
+            System.out.println("Dette blir ny Holder. Ny verdi: " + hashTabell[neste] + "\n");
             while (hashTabell[neste] != null)
             {
-                antProbes++;
+
                 Override = holder;
+                System.out.println("New Override: " + Override);
                 holder = hashTabell[neste];
+                System.out.println("Skal matche verdien to opp!");
+                System.out.println("New Holder: " + holder);
                 hashTabell[neste] = Override;
+                System.out.println("Setter fra meg New Override: " + hashTabell[neste]);
                 neste++;
+                System.out.println("HashTabell[neste] bytte verdi: " + hashTabell[neste] + "\n");
                 if (neste >= hashLength)
                     neste = 0;  // Når koden har nådd slutten går den tilbake til starten
 
@@ -114,6 +139,28 @@ public class LCFS {
                     System.exit(0);
                 }
             }
+            System.out.println("Swapping is done!\n\n");
+            /*
+            System.out.println("HashTabell[neste] bytte verdi: " + hashTabell[neste] + "\n");
+            if (neste >= hashLength)
+                neste = 0;  // Når koden har nådd slutten går den tilbake til starten
+
+            // Hvis vi er kommet tilbake til opprinnelig hashverdi, er
+            // tabellen full og vi gir opp (her ville man normalt
+            // doblet lengden på hashtabellen og gjort en rehashing)
+            if (neste == h)
+            {
+                System.err.println("\nHashtabell full, avbryter");
+                System.exit(0);
+            }
+            */
+
+            //LC,FS -> Bare et par linjer til med kode, legg inn en swap
+            //	Kun 1 linje er nødvendig! o.O
+            //RH -> Lite kode, men beregne verdien for begge som må
+            //	sammenlignes. Finn hvem som som må flyttes videre
+            //	3/4 linjer nødvendig
+            // Wrap-around
         }
 
         // Lagrer tekststrengen på funnet indeks
@@ -157,4 +204,16 @@ public class LCFS {
         // Finner ikke strengen, har kommet til en probe som er null
         return false;
     }
+
+    // Enkelt testprogram:
+    //
+    // * Hashlengde gis som input på kommandolinjen
+    //
+    // * Leser tekststrenger linje for linje fra standard input
+    //   og lagrer dem i hashtabellen
+    //
+    // * Skriver ut litt statistikk etter innsetting
+    //
+    // * Tester om søk fungerer for et par konstante verdier
+    //
 }

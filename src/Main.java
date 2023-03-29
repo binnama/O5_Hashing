@@ -1,4 +1,5 @@
 import modules.LCFS;
+import modules.RobinHood;
 
 import java.io.*;
 import java.util.Scanner;
@@ -14,6 +15,7 @@ public class Main {
 
         int hashLength = 3000;
         LCFS lcfs = new LCFS(hashLength);
+        //RobinHood robinHood = new RobinHood(hashLength);
 
         try
         {
@@ -28,6 +30,7 @@ public class Main {
             while (inputFile.hasNext())
             {
                 lcfs.insert(inputFile.nextLine());
+                //robinHood.insert(inputFile.nextLine());
                 // Middlertidig
                 //count++;
             }
@@ -41,13 +44,21 @@ public class Main {
         // Oppgave 1: Last Come First Serve
         // Skriver ut hashlengde, antall data lest, antall kollisjoner
         // og load factor
+
+
         System.out.println("Hashlengde  : " + hashLength);
         System.out.println("Elementer   : " + lcfs.antData());
         System.out.printf( "Load factor : %5.3f\n",  lcfs.loadFactor());
         System.out.println("Probes      : " + lcfs.antProbes());
-    }
 
+/*
         //Oppgave 2: Robin Hood
-
+        System.out.println("Hashlengde  : " + hashLength);
+        System.out.println("Elementer   : " + robinHood.antData());
+        System.out.printf( "Load factor : %5.3f\n",  robinHood.loadFactor());
+        System.out.println("Probes      : " + robinHood.antProbes());
+*/
         //Oppgave 3: Fjerning av data
+
+    }
 }

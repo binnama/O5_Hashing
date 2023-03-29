@@ -1,8 +1,5 @@
 package modules;
 
-import java.io.*;
-import java.util.Scanner;
-
 // Hashing av tekststrenger med lineær probing
 // Bruker Javas innebygde hashfunksjon for strenger
 //
@@ -11,10 +8,10 @@ import java.util.Scanner;
 // - Ingen rehashing ved full tabell
 // - Tilbyr bare innsetting og søking
 
-public class hashLinear
+public class RobinHood
 {
     // Hashlengde
-    private int hashLengde;
+    private int hashLength;
 
     // Hashtabell
     private String hashTabell[];
@@ -28,9 +25,9 @@ public class hashLinear
     // Konstruktør
     // Sjekker ikke for fornuftig verdi av hashlengden
     //
-    public hashLinear(int lengde)
+    public RobinHood(int lengde)
     {
-	hashLengde = lengde;
+	hashLength = lengde;
 	hashTabell = new String[lengde];
 	n = 0;
 	antProbes = 0;
@@ -39,7 +36,7 @@ public class hashLinear
     // Returnerer load factor
     public float loadFactor()
     {
-	return ((float) n)/hashLengde;
+	return ((float) n)/ hashLength;
     }
 
     // Returnerer antall data i tabellen
@@ -58,13 +55,13 @@ public class hashLinear
     int hash(String S)
     { 
 	int h = Math.abs(S.hashCode());
-	return h % hashLengde;
+	return h % hashLength;
     }
 
     // Innsetting av tekststreng med lineær probing
     // Avbryter med feilmelding hvis ledig plass ikke finnes
     //
-    void insert(String S)
+    public void insert(String S)
     {
 	// Beregner hashverdien
 	int h = hash(S);
@@ -72,26 +69,46 @@ public class hashLinear
 	// Lineær probing
 	int neste = h;
 
+	String Override = S;
+	String holder;
+
 	while (hashTabell[neste] != null)
 	{
-	    // Ny probe
-	    antProbes++;
+		// Ny probe
+		antProbes++;
 
-	    // Denne indeksen er opptatt, prøver neste
-	    neste++;
-	    
-	    // Wrap-around
-	    if (neste >= hashLengde)
-		neste = 0;
+		// Lagrer den gamle verdien på gjeldende index
+		holder = hashTabell[neste];     // Holder på den gamle verdien
 
-	    // Hvis vi er kommet tilbake til opprinnelig hashverdi, er
-	    // tabellen full og vi gir opp (her ville man normalt
-	    // doblet lengden på hashtabellen og gjort en rehashing)
-	    if (neste == h)
-	    {
-		System.err.println("\nHashtabell full, avbryter");
-		System.exit(0);
-	    }
+		hashTabell[neste] = Override;   // Setter den nye verdien på gjeldende index
+
+		neste++;
+
+		if (hashTabell[neste] == null) {
+			hashTabell[neste] = holder;
+			break;
+		}
+
+		while (hashTabell[neste] != null)
+		{
+			antProbes++;
+			Override = holder;
+			holder = hashTabell[neste];
+			hashTabell[neste] = Override;
+			neste++;
+			if (neste >= hashLength)
+				neste = 0;  // Når koden har nådd slutten går den tilbake til starten
+
+			// Hvis vi er kommet tilbake til opprinnelig hashverdi, er
+			// tabellen full og vi gir opp (her ville man normalt
+			// doblet lengden på hashtabellen og gjort en rehashing)
+			if (neste == h)
+			{
+				System.err.println("\nHashtabell full, avbryter");
+				System.exit(0);
+			}
+		}
+
 	}
 
 	// Lagrer tekststrengen på funnet indeks
@@ -122,7 +139,7 @@ public class hashLinear
 	    neste++;
 	    
 	    // Wrap-around
-	    if (neste >= hashLengde)
+	    if (neste >= hashLength)
 		neste = 0;
 
 	    // Hvis vi er kommet tilbake til opprinnelig hashverdi,
@@ -135,48 +152,4 @@ public class hashLinear
 	return false;
     }
 
-    // Enkelt testprogram:
-    // 
-    // * Leser hashlengde og datafil fra bruker
-    //
-    // * Leser tekststrenger linje for linje fra datafilen
-    //   og lagrer dem i hashtabellen
-    //
-    // * Skriver ut litt statistikk etter innsetting
-    //
-    public static void main(String argv[])
-    {
-	// Hashlengde leses fra bruker
-	Scanner in = new Scanner(System.in);
-	System.out.print("Hashlengde? ");
-	int hashLengde = in.nextInt();
-
-	// Lager ny hashTabell
-	hashLinear hL = new hashLinear(hashLengde);
-
-	// Leser datafil og hasher alle linjer
-	try
-	{
-	    System.out.print("Datafil? ");
-	    String filnavn = in.next();
-	    Scanner input = new Scanner(new File(filnavn));
-	
-	    while (input.hasNext())
-	    {
-		hL.insert(input.nextLine());
-	    }
-
-	    // Skriver ut hashlengde, antall data lest, antall kollisjoner
-	    // og load factor
-	    System.out.println("\nHashlengde  : " + hashLengde);
-	    System.out.println("Elementer   : " + hL.antData());
-	    System.out.printf( "Load factor : %5.3f\n",  hL.loadFactor());
-	    System.out.println("Probes      : " + hL.antProbes() + "\n");
-	}
-	catch (Exception e)
-	{
-	     System.err.println(e);
-	     System.exit(1);
-	}
-    }
 }

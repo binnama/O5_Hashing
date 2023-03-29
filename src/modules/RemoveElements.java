@@ -1,9 +1,6 @@
 package modules;
 
-public class LCFS {
-    // Last Come First Serve
-
-    // Hashlengde
+public class RemoveElements {    // Hashlengde
     private int hashLength;
 
     // Hashtabell
@@ -18,7 +15,7 @@ public class LCFS {
     // Konstruktør
     // Sjekker ikke for fornuftig verdi av hashlengden
     //
-    public LCFS(int lengde)
+    public RemoveElements(int lengde)
     {
         hashLength = lengde;
         hashTabell = new String[lengde];
@@ -51,6 +48,9 @@ public class LCFS {
         return h % hashLength;
     }
 
+    // Innsetting av tekststreng med lineær probing
+    // Avbryter med feilmelding hvis ledig plass ikke finnes
+    //
     public void insert(String S)
     {
         // Beregner hashverdien
@@ -59,27 +59,11 @@ public class LCFS {
         // Lineær probing
         int neste = h;
 
-        // Lagrer nye verdier som egen. Fordi jeg kan :D
         String Override = S;
         String holder;
 
-        // Så lenge plassen er opptatt:
         while (hashTabell[neste] != null)
         {
-
-            /*
-             Skriver heller endringene som har blitt gjort her:
-             Lagde Override og holder for å holde styr på hva jeg holdt på med. Kunne sikkert
-             bare holdt meg på 'neste', men turte ikke teste ut det
-             Her i while fjernet jeg den første 'neste++' og lagret den eksisterende verdien i holder
-             Så lagret jeg Override i hashTabell[neste] og økte neste med 1. Dersom neste plass var ledig vil
-             verdien bli plassert der.
-             For å håndtere forekomster der jeg måtte swappe med eldre verdier kjørte jeg enda en while-loop.
-             Der settes holder-verdien til å bli den nye Override, mens ny holder blir verdien som ligger på
-             den nye indexen.
-             Kunne helt sikkert gjort det penere og kortere, men nå funker den i det minste XD
-             */
-
             // Ny probe
             antProbes++;
 
@@ -97,7 +81,6 @@ public class LCFS {
 
             while (hashTabell[neste] != null)
             {
-                antProbes++;
                 Override = holder;
                 holder = hashTabell[neste];
                 hashTabell[neste] = Override;
@@ -114,10 +97,10 @@ public class LCFS {
                     System.exit(0);
                 }
             }
+
         }
 
         // Lagrer tekststrengen på funnet indeks
-        // Byttet fra S til Override
         hashTabell[neste] = S;
 
         // Øker antall elementer som er lagret
