@@ -98,7 +98,6 @@ public class LCFSwSOUTs {    // Last Come First Serve
 
             //Mutet denne ->
             //neste++;
-
             // Lagrer den gamle verdien på gjeldende index
             holder = hashTabell[neste];     // Holder på den gamle verdien
             System.out.println("Holder : " + holder);
@@ -140,20 +139,6 @@ public class LCFSwSOUTs {    // Last Come First Serve
                 }
             }
             System.out.println("Swapping is done!\n\n");
-            /*
-            System.out.println("HashTabell[neste] bytte verdi: " + hashTabell[neste] + "\n");
-            if (neste >= hashLength)
-                neste = 0;  // Når koden har nådd slutten går den tilbake til starten
-
-            // Hvis vi er kommet tilbake til opprinnelig hashverdi, er
-            // tabellen full og vi gir opp (her ville man normalt
-            // doblet lengden på hashtabellen og gjort en rehashing)
-            if (neste == h)
-            {
-                System.err.println("\nHashtabell full, avbryter");
-                System.exit(0);
-            }
-            */
 
             //LC,FS -> Bare et par linjer til med kode, legg inn en swap
             //	Kun 1 linje er nødvendig! o.O

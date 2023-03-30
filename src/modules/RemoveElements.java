@@ -1,16 +1,44 @@
 package modules;
 
-public class RemoveElements {    // Hashlengde
+
+// Hashing av tekststrenger med kjeding i lenket liste
+// Bruker Javas innebygde hashfunksjon for strenger
+//
+// Enkel og begrenset implementasjon:
+//
+// - Ingen rehashing ved full tabell/lange lister
+// - Tilbyr bare innsetting og søking
+//
+public class RemoveElements
+{
+    // Indre klasse:
+    // Node med data, kjedes sammen i lenkede lister
+    //
+    private class hashNode
+    {
+        // Data, en tekststreng
+        String data;
+        // Neste node i listen
+        hashNode neste;
+
+        // Konstruktør for listenoder
+        public hashNode(String S, hashNode hN) {
+            data = S;
+            neste = hN;
+        }
+    }
+
+    // Hashlengde
     private int hashLength;
 
-    // Hashtabell
-    private String hashTabell[];
+    // Hashtabell, pekere til lister
+    private hashNode hashTabell[];
 
     // Antall elementer lagret i tabellen
     private int n;
 
-    // Antall probes ved innsetting
-    private int antProbes;
+    // Antall kollisjoner ved innsetting
+    private int antKollisjoner;
 
     // Konstruktør
     // Sjekker ikke for fornuftig verdi av hashlengden
@@ -18,9 +46,9 @@ public class RemoveElements {    // Hashlengde
     public RemoveElements(int lengde)
     {
         hashLength = lengde;
-        hashTabell = new String[lengde];
+        hashTabell = new hashNode[lengde];
         n = 0;
-        antProbes = 0;
+        antKollisjoner = 0;
     }
 
     // Returnerer load factor
@@ -35,10 +63,10 @@ public class RemoveElements {    // Hashlengde
         return n;
     }
 
-    // Returnerer antall probes ved innsetting
-    public int antProbes()
+    // Returnerer antall kollisjoner ved innsetting
+    public int antKollisjoner()
     {
-        return antProbes;
+        return antKollisjoner;
     }
 
     // Hashfunksjon
@@ -48,96 +76,51 @@ public class RemoveElements {    // Hashlengde
         return h % hashLength;
     }
 
-    // Innsetting av tekststreng med lineær probing
-    // Avbryter med feilmelding hvis ledig plass ikke finnes
+    // Innsetting av tekststreng med kjeding
     //
     public void insert(String S)
     {
+        //System.out.println("Inserting: " + S);
         // Beregner hashverdien
         int h = hash(S);
-
-        // Lineær probing
-        int neste = h;
-
-        String Override = S;
-        String holder;
-
-        while (hashTabell[neste] != null)
-        {
-            // Ny probe
-            antProbes++;
-
-            // Lagrer den gamle verdien på gjeldende index
-            holder = hashTabell[neste];     // Holder på den gamle verdien
-
-            hashTabell[neste] = Override;   // Setter den nye verdien på gjeldende index
-
-            neste++;
-
-            if (hashTabell[neste] == null) {
-                hashTabell[neste] = holder;
-                break;
-            }
-
-            while (hashTabell[neste] != null)
-            {
-                Override = holder;
-                holder = hashTabell[neste];
-                hashTabell[neste] = Override;
-                neste++;
-                if (neste >= hashLength)
-                    neste = 0;  // Når koden har nådd slutten går den tilbake til starten
-
-                // Hvis vi er kommet tilbake til opprinnelig hashverdi, er
-                // tabellen full og vi gir opp (her ville man normalt
-                // doblet lengden på hashtabellen og gjort en rehashing)
-                if (neste == h)
-                {
-                    System.err.println("\nHashtabell full, avbryter");
-                    System.exit(0);
-                }
-            }
-
-        }
-
-        // Lagrer tekststrengen på funnet indeks
-        hashTabell[neste] = S;
 
         // Øker antall elementer som er lagret
         n++;
+
+        // Sjekker om kollisjon
+        if (hashTabell[h] != null)
+            antKollisjoner++;
+
+        // Setter inn ny node først i listen
+        hashTabell[h] = new hashNode(S, hashTabell[h]);
     }
 
-    // Søking etter tekststreng med lineær probing
+    // Søking etter tekststreng i hashtabell med kjeding
     // Returnerer true hvis strengen er lagret, false ellers
     //
-    boolean search(String S)
+    public boolean searchAndDelete(String S)
     {
-        // Beregner hashverdien
-        int h = hash(S);
 
-        // Lineær probing
-        int neste = h;
+        // Finner listen som S skal ligge i
+        hashNode hN = hashTabell[hash(S)];
 
-        while (hashTabell[neste] != null)
-        {
+        // Leter gjennom listen
+        while (hN != null) {
             // Har vi funnet tekststrengen?
-            if (hashTabell[neste].compareTo(S) == 0)
+            if (hN.data.compareTo(S) == 0) {
+                // Noden må fjernes fra listen
+                // Må sette sammen nodene før og etter
+                // Må bryte ut av loopen
+                hashNode beforeNode = hashTabell[hash(S)];
+                hashNode afterNode = hashTabell[hash(S)];
+                System.out.println("Settningen \"" + S + "\" er en del av tabellen");
                 return true;
-
-            // Prøver neste mulige
-            neste++;
-
-            // Wrap-around
-            if (neste >= hashLength)
-                neste = 0;
-
-            // Hvis vi er kommet tilbake til opprinnelig hashverdi,
-            // finnes ikke strengen i tabellen
-            if (neste == h)
-                return false;
+            }
+            // Prøver neste
+            hN = hN.neste;
         }
-
-        // Finner ikke strengen, har kommet til en probe som er null
+        // Finner ikke strengen, har kommet til slutten av listen
+        System.out.println("Settningen \"" + S + "\" er ikke en del av tabellen");
         return false;
     }
 }
