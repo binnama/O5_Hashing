@@ -11,11 +11,9 @@ public class Main {
         int run = 1;
 
         Scanner input = new Scanner(System.in);
-        //System.out.println("Please provide a hash length: ");
-        //int hashLength = input.nextInt();
-        //System.out.println(hashLength);
+        System.out.println("Please provide a hash length: ");
+        int hashLength = input.nextInt();
 
-        int hashLength = 2500;
         LCFS lcfs = new LCFS(hashLength);
         RobinHood robinHood = new RobinHood(hashLength);
         RemoveElements rE = new RemoveElements(hashLength);
@@ -62,7 +60,7 @@ public class Main {
                 }
 
                 if (oppgave == 3) {
-                    /* Oppgave 3: Sletting fra en  */
+                    /* Oppgave 3: Sletting fra en liste */
                     while (inputFile.hasNext()) {
                         rE.insert(inputFile.nextLine());
                     }
