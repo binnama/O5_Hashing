@@ -67,7 +67,7 @@ public class Main {
         rE.searchAndDelete(delete3);
         rE.searchAndDelete("Dette er også en spennende tekst");
 
-        //rE.printList();
+        rE.searchAndDelete(delete1);
 
         }
         catch (Exception e)
