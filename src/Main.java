@@ -59,11 +59,6 @@ public class Main {
 
         //Oppgave 3: Fjerning av data
 
-        //System.out.println("\nHashlengde  : " + hashLength);
-        //System.out.println("Elementer   : " + rE.antData());
-        //System.out.printf( "Load factor : %5.3f\n",  rE.loadFactor());
-        //System.out.println("Kollisjoner : " + rE.antKollisjoner() + "\n");
-
         String delete1 = "var voksne. Et par menn med strøkne dresser, en gammel";
         String delete2 = "snakke med Lucy igjen. Han som hadde bestemt seg for å";
         String delete3 = "En setning som ikke er som de andre";
@@ -72,6 +67,7 @@ public class Main {
         rE.searchAndDelete(delete3);
         rE.searchAndDelete("Dette er også en spennende tekst");
 
+        //rE.printList();
 
         }
         catch (Exception e)
