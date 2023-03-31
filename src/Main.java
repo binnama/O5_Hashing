@@ -15,7 +15,7 @@ public class Main {
         //int hashLength = input.nextInt();
         //System.out.println(hashLength);
 
-        int hashLength = 3000;
+        int hashLength = 2500;
         LCFS lcfs = new LCFS(hashLength);
         RobinHood robinHood = new RobinHood(hashLength);
         RemoveElements rE = new RemoveElements(hashLength);

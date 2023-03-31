@@ -86,9 +86,9 @@ public class RobinHood
 		int vpsl = 0;
 
 		while (hashTabell[neste] != null) {
-			// Dersom PSL blir høyere enn eksisterende PSL (vppsl) vil de to bytte plass og den nye verdien
+			// Dersom PSL blir høyere enn eksisterende PSL (vpsl) vil de to bytte plass og den nye verdien
 			// fortsetter nedover med swapping til den finner en ledig plass hvor den får en ny PSL-verdi.
-			if ( psl > dist[neste]) {
+			if (psl > dist[neste]) {
 				System.out.println("dist[neste] LCFS: " + dist[neste]);
 				System.out.println("psl LCFS: " + psl);
         /*
@@ -107,7 +107,12 @@ public class RobinHood
 					break;
 				}
 
-				while (hashTabell[neste] != null) {
+				while (hashTabell[neste] != null && psl > dist[neste]) {
+
+					System.out.println("Nå er vi inne i innerste while!!!!");
+					System.out.println("dist[neste] while2: " + dist[neste]);
+					System.out.println("psl while2: " + psl);
+
 					antProbes++;
 					Override = holder;
 					holder = hashTabell[neste];
