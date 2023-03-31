@@ -86,14 +86,17 @@ public class RobinHood
 		int vpsl = 0;
 
 		while (hashTabell[neste] != null) {
+
 			// Dersom PSL blir høyere enn eksisterende PSL (vpsl) vil de to bytte plass og den nye verdien
 			// fortsetter nedover med swapping til den finner en ledig plass hvor den får en ny PSL-verdi.
+
 			if (psl > dist[neste]) {
-				System.out.println("dist[neste] LCFS: " + dist[neste]);
-				System.out.println("psl LCFS: " + psl);
-        /*
-		Bruker LCFS-koden videre fra forrige oppgave
-		 */
+				//System.out.println("dist[neste] LCFS: " + dist[neste]);
+				//System.out.println("psl LCFS: " + psl);
+        		/*
+				Bruker LCFS-koden videre fra forrige oppgave
+				 */
+
 				antProbes++;
 
 				holder = hashTabell[neste];     // Holder på den gamle verdien
@@ -108,10 +111,11 @@ public class RobinHood
 				}
 
 				while (hashTabell[neste] != null && psl > dist[neste]) {
-
+/*
 					System.out.println("Nå er vi inne i innerste while!!!!");
 					System.out.println("dist[neste] while2: " + dist[neste]);
 					System.out.println("psl while2: " + psl);
+					*/
 
 					antProbes++;
 					Override = holder;
@@ -130,8 +134,8 @@ public class RobinHood
 			}
 			else { // Vanlig lineær probing / innsetting
 
-				System.out.println("dist[neste] difølt: " + dist[neste]);
-				System.out.println("psl difølt: " + psl);
+				//System.out.println("dist[neste] difølt: " + dist[neste]);
+				//System.out.println("psl difølt: " + psl);
 				antProbes++;
 
 				neste++;
@@ -153,35 +157,4 @@ public class RobinHood
 
 		n++;
     }
-
-    boolean search(String S)
-    {
-		// Beregner hashverdien
-		int h = hash(S);
-
-		// Lineær probing
-		int neste = h;
-
-		while (hashTabell[neste] != null) {
-			// Har vi funnet tekststrengen?
-			if (hashTabell[neste].compareTo(S) == 0)
-				return true;
-
-			// Prøver neste mulige
-			neste++;
-
-			// Wrap-around
-			if (neste >= hashLength)
-				neste = 0;
-
-			// Hvis vi er kommet tilbake til opprinnelig hashverdi,
-			// finnes ikke strengen i tabellen
-			if (neste == h)
-				return false;
-		}
-
-		// Finner ikke strengen, har kommet til en probe som er null
-		return false;
-    }
-
 }
