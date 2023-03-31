@@ -4,6 +4,8 @@ package modules;
 // https://www.geeksforgeeks.org/java-program-for-deleting-a-node-in-a-linked-list/
 
 public class RemoveElements {
+
+    // Lagde meg enda en node for å holde på den første noeden i listen
     hashNode head;
 
     // Indre klasse:
@@ -85,8 +87,29 @@ public class RemoveElements {
     // Søking etter tekststreng i hashtabell med kjeding
     // Returnerer true hvis strengen er lagret, false ellers
 
+    boolean search(String S)
+    {
+        // Finner listen som S skal ligge i
+        hashNode hN = hashTabell[hash(S)];
+
+        // Leter gjennom listen
+        while (hN != null) {
+            // Har vi funnet tekststrengen?
+            if ( hN.data.compareTo(S) == 0) {
+                System.out.println("Found: " + S);
+                return true;
+            }
+            // Prøver neste
+            hN = hN.neste;
+        }
+        // Finner ikke strengen, har kommet til slutten av listen
+        System.out.println("Not found: " + S);
+        return false;
+    }
+
+
     // Byttet fra bool til void
-    public void searchAndDelete(String S) {
+    public void Delete(String S) {
         // Fra  GFG med Copilots hjelp
         head = hashTabell[hash(S)];
         hashNode temp = head;
@@ -103,6 +126,7 @@ public class RemoveElements {
                 return;
             }
 
+            // Jobber seg gjennom listen
             while (temp != null && temp.data.compareTo(S) != 0) {
                 prev = temp;
                 temp = temp.neste;
@@ -115,7 +139,7 @@ public class RemoveElements {
 
             // Fjerner elementet fra listen
             System.out.println("Fjerner elementet fra listen:");
-            System.out.println("Temp: " + temp.data +"\n");
+            System.out.println("\"" + temp.data +"\"\n");
             prev.neste = temp.neste;
             break;
         }

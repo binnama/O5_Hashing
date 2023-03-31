@@ -67,17 +67,17 @@ public class LCFS {
         while (hashTabell[neste] != null)
         {
 
-            /*
-             Skriver heller endringene som har blitt gjort her:
-             Lagde Override og holder for å holde styr på hva jeg holdt på med. Kunne sikkert
-             bare holdt meg på 'neste', men turte ikke teste ut det
-             Her i while fjernet jeg den første 'neste++' og lagret den eksisterende verdien i holder
-             Så lagret jeg Override i hashTabell[neste] og økte neste med 1. Dersom neste plass var ledig vil
-             verdien bli plassert der.
-             For å håndtere forekomster der jeg måtte swappe med eldre verdier kjørte jeg enda en while-loop.
-             Der settes holder-verdien til å bli den nye Override, mens ny holder blir verdien som ligger på
-             den nye indexen.
-             Kunne helt sikkert gjort det penere og kortere, men nå funker den i det minste XD
+            /**
+             * Skriver heller endringene som har blitt gjort her:
+             * Lagde Override og holder for å holde styr på hva jeg holdt på med. Kunne sikkert
+             * bare holdt meg på 'neste', men turte ikke teste ut det
+             * Her i while fjernet jeg den første 'neste++' og lagret den eksisterende verdien i holder
+             * Så lagret jeg Override i hashTabell[neste] og økte neste med 1. Dersom neste plass var ledig vil
+             * verdien bli plassert der.
+             * For å håndtere forekomster der jeg måtte swappe med eldre verdier kjørte jeg enda en while-loop.
+             * Der settes holder-verdien til å bli den nye Override, mens ny holder blir verdien som ligger på
+             * den nye indexen.
+             * Kunne helt sikkert gjort det penere og kortere, men nå funker den i det minste XD
              */
 
             // Ny probe
@@ -102,6 +102,7 @@ public class LCFS {
                 holder = hashTabell[neste];
                 hashTabell[neste] = Override;
                 neste++;
+
                 if (neste >= hashLength)
                     neste = 0;  // Når koden har nådd slutten går den tilbake til starten
 
@@ -123,8 +124,4 @@ public class LCFS {
         // Øker antall elementer som er lagret
         n++;
     }
-
-    // Søking etter tekststreng med lineær probing
-    // Returnerer true hvis strengen er lagret, false ellers
-    //
 }
